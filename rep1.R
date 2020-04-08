@@ -57,7 +57,7 @@ atividades <- data
 atividades$steps <- pegaNA
 
 png('totalpassos.png')
-agregado <- aggregate(steps ~ date, data = new_activity, sum, na.rm = TRUE)
+agregado <- aggregate(steps ~ date, data = atividades, sum, na.rm = TRUE)
 hist(agregado$steps, main = paste("Total Steps per days"), col="green", xlab="Number of Steps")
 dev.off()
 
@@ -74,9 +74,11 @@ medianotot
 png('Comparison.png')
 weekdays  <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
 
-new_activity$dow = as.factor(ifelse(is.element(weekdays (as.Date(new_activity$date)),weekdays), 'weekday', 'weekends'))
-aggregate <- aggregate(steps ~ interval + dow, new_activity, mean)
+atividades$dow = as.factor(ifelse(is.element(weekdays(as.Date(atividades$date)),weekdays), 'Weekdays', 'Weekends'))
+
+agregado <- aggregate(steps ~ interval + dow, atividades, mean)
 library(lattice)
-xyplot(agregado$steps ~ agregado$interval|agregado$dow, main="Average Steps per Day by Interval",xlab="Interval", ylab="Steps",layout=c(1,2), type="l")
+xyplot(agregado$steps ~ agregado$interval|agregado$dow, main="Average Steps - Interval based on days",xlab="Interval", ylab="Steps",layout=c(1,2), type="l")
+
 dev.off()
 
