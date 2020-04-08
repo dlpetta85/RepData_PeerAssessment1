@@ -74,7 +74,7 @@ medianotot
 png('Comparison.png')
 weekdays  <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
 
-atividades$dow = as.factor(ifelse(is.element(weekdays(as.Date(atividades$date)),weekdays), 'Weekdays', 'Weekends'))
+atividades$dow = as.factor(ifelse(is.element(weekdays(as.Date(atividades$date)),weekdays), 'weekdays', 'Weekends'))
 
 agregado <- aggregate(steps ~ interval + dow, atividades, mean)
 library(lattice)
