@@ -61,3 +61,8 @@ agregado <- aggregate(steps ~ date, data = new_activity, sum, na.rm = TRUE)
 hist(agregado$steps, main = paste("Total Steps per days"), col="green", xlab="Number of Steps")
 dev.off()
 
+mediatot <- mean(agregado$steps)
+mediatot
+
+medianotot <- median(agregado$steps)
+medianotot
