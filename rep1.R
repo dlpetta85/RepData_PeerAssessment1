@@ -36,7 +36,7 @@ espaçomax
 
 ##Working and plotting data of missing values
 ##6. Code to describe and show a strategy for imputing missing data
-## 7. Histogram of the total number of steps taken each day after missing values are imputed
+##7. Histogram of the total number of steps taken each day after missing values are imputed
 
 Mistotal <- sum(!complete.cases(data))
 Mistotal
@@ -53,8 +53,8 @@ for (i in 1:nrow(data)) {
   pegaNA <- c(pegaNA, steps)
 }
 
-new_activity <- data
-new_activity$steps <- pegaNA
+atividades <- data
+atividades$steps <- pegaNA
 
 png('totalpassos.png')
 agregado <- aggregate(steps ~ date, data = new_activity, sum, na.rm = TRUE)
@@ -66,3 +66,17 @@ mediatot
 
 medianotot <- median(agregado$steps)
 medianotot
+
+
+##Working and plotting data to split pattern
+##8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
+##9. All of the R code needed to reproduce the results (numbers, plots, etc.) in the report
+png('Comparison.png')
+weekdays  <- c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')
+
+new_activity$dow = as.factor(ifelse(is.element(weekdays (as.Date(new_activity$date)),weekdays), 'weekday', 'weekends'))
+aggregate <- aggregate(steps ~ interval + dow, new_activity, mean)
+library(lattice)
+xyplot(agregado$steps ~ agregado$interval|agregado$dow, main="Average Steps per Day by Interval",xlab="Interval", ylab="Steps",layout=c(1,2), type="l")
+dev.off()
+
