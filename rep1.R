@@ -7,3 +7,11 @@ if (!file.exists("activity.csv") )
 }
 data <- read.csv("activity.csv")  
 
+##Working and plotting data
+png('steps.png')
+mov <- aggregate(steps ~ date, data, sum)
+hist(mov$steps, main = paste("Total of steps per Day"), col='Red',xlab='Number of Steps')
+dev.off()
+
+med <- mean(mov$steps)
+med
