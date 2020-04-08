@@ -25,6 +25,7 @@ mediano
 
 ##Working and plotting data of average activity 
 ## 4. Time series plot of the average number of steps taken
+## 5. The 5-minute interval that, on average, contains the maximum number of steps
 png('interval.png')
 espaço <- aggregate(steps ~ interval, data, mean)
 plot(espaço$interval,espaço$steps, type="l", xlab="Interval", ylab="Number of Steps",main="Average Number per Day by Interval")
@@ -32,4 +33,31 @@ dev.off()
 
 espaçomax <- espaço[which.max(espaço$steps),1]
 espaçomax
+
+##Working and plotting data of missing values
+##6. Code to describe and show a strategy for imputing missing data
+## 7. Histogram of the total number of steps taken each day after missing values are imputed
+
+Mistotal <- sum(!complete.cases(data))
+Mistotal
+
+mediapassos <- aggregate(steps ~ interval, data = data, FUN = mean)
+pegaNA <- numeric()
+for (i in 1:nrow(data)) {
+  obs <- data[i, ]
+  if (is.na(obs$steps)) {
+    steps <- subset(mediapassos, interval == obs$interval)$steps
+  } else {
+    steps <- obs$steps
+  }
+  pegaNA <- c(pegaNA, steps)
+}
+
+new_activity <- data
+new_activity$steps <- pegaNA
+
+png('totalpassos.png')
+agregado <- aggregate(steps ~ date, data = new_activity, sum, na.rm = TRUE)
+hist(agregado$steps, main = paste("Total Steps per days"), col="green", xlab="Number of Steps")
+dev.off()
 
